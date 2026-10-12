@@ -1,27 +1,27 @@
 {
-  "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "functions": {
-    "api/main.py": {
-      "runtime": "python@3.10",
-      "maxDuration": 60
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "app": {
+      "root": ".",
+      "framework": "vite"
+    },
+    "api": {
+      "root": "api",
+      "framework": "fastapi"
     }
   },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/main.py"
+      "destination": {
+        "service": "api"
+      }
     },
     {
       "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
-  "crons": [
-    {
-      "path": "/api/cron/cleanup",
-      "schedule": "0 * * * *"
+      "destination": {
+        "service": "app"
+      }
     }
   ]
 }
